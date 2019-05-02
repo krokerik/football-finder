@@ -3,7 +3,7 @@ body {
 	color: white;
 }
 
-#settings {
+#settings, #games {
 	width: 20%;
 }
 #settings input, #settings select {
