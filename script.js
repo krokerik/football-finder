@@ -1,32 +1,3 @@
-var districts = [{name: "Blekinge Fotbollsförbund",  id: 2},
-                 {name: "Bohusläns Fotbollsförbund", id: 25},
-                 {name: "Dalarnas FF",  id: 4},
-                 {name: "Dalslands FF", id: 3},
-                 {name: "Gestriklands FF", id: 6},
-                 {name: "Gotlands FF",  id: 5},
-                 {name: "Göteborgs FF", id: 7},
-                 {name: "Hallands FF", id: 8},
-                 {name: "Hälsinglands FF", id: 9},
-                 {name: "Jämtland-Härjedalens FF", id: 10},
-                 {name: "Medelpads FF", id: 11},
-                 {name: "Norrbottens FF", id: 12},
-                 {name: "Skånes FF", id: 14},
-                 {name: "Smålands FF", id: 15},
-                 {name: "Stockholms FF", id: 16},
-                 {name: "SvFF", id: 1},
-                 {name: "Södermanlands FF", id: 17},
-                 {name: "Upplands FF", id: 18},
-                 {name: "Värmlands FF", id: 19},
-                 {name: "Västerbottens FF", id: 20},
-                 {name: "Västergötlands FF", id: 21},
-                 {name: "Västmanlands FF", id: 22},
-                 {name: "Ångermanlands FF", id: 23},
-                 {name: "Örebro Läns FF", id: 13},
-                 {name: "Östergötlands FF", id: 24},
-                 {name: "FIFA", id: 27}];
-
-var venues = [];
-
 var leagues = [];
 
 var games = [];
@@ -52,6 +23,12 @@ function setup() {
 
 function getGames() {
 	loading();
+	games.length = 0; // empty game array
+	for(var i=0; i<venues.length; i++) {
+		venues[i].games.length = 0;
+	}
+	renderList();
+	renderVenueList();
 	var district = document.getElementById("districtPicker").value;
 	var date = document.getElementById("gameDate").value;
 	var url = "https://cors-anywhere.herokuapp.com/http://fogismallar2.svenskfotboll.se/ft.aspx?scr=today&ffid="+district+"&d="+date;
@@ -64,8 +41,6 @@ function getGames() {
 		gameTable = gameTable[gameTable.length-1];
 		return gameTable.children;
 	}).then(function(rows) {
-		games.length = 0; // empty information array
-		venues.length = 0;
 		var league = "";
 		var leagueId = -1;
 		for(var i=0; i<rows.length; i++) {
@@ -173,18 +148,23 @@ function renderVenueList() {
 	});
 	for(var i=0; i<venues.length; i++) {
 		var venue = venues[i];
+		if(venue.games.length < 1) {
+			continue;
+		}
 		var element = document.createElement("li");
 		var text = document.createTextNode(venue.name + " - "+venue.games.length+" games");
-		console.log(typeof(venue.lat) !== "undefined");
-		console.log(typeof(venue.lat) +" !== "+ "undefined");
-		console.log(venue.lat);
 		if(typeof(venue.lat) !== "undefined" && typeof(venue.lon) !== "undefined") {
 			var link = document.createElement("a");
 			link.href = "http://maps.google.com/maps?q="+venue.lat+","+venue.lon;
 			link.appendChild(text);
 			element.appendChild(link);
 		} else {
+			var link = document.createElement("a");
+			var linkText = document.createTextNode("Do you know the location of this place? Make a pull request with the correct position, id is "+venue.id);
+			link.href = "https://github.com/krokerik/football-finder/edit/master/static.js";
+			link.appendChild(linkText);
 			element.appendChild(text);
+			element.appendChild(link);
 		}
 		list.appendChild(element);
 	}
