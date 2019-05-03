@@ -3,8 +3,10 @@
 	<meta charset="utf-8">
 	<title>Football Game Finder</title>
 	<link href="style.css" rel="stylesheet">
+	<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+	<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 	<script type="text/javascript" src="static.js"></script>
-	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
 	<h1>Football Game Finder</h1>
@@ -12,19 +14,7 @@
 	<p>
 		Website for finding football games in your area to attend.
 	</p>
-	<div id="settings">
-		<h2>Settings</h2>
-		<select id="districtPicker"></select>
-		<input id="gameDate" type="date">
-		<input id="settingsButton" type="button" value="Get Games">
-	</div>
-	<div id="games">
-		<h2>Games</h2>
-		<ol id="gameList" />
-	</div>
-	<div id="venues">
-		<h2>Venues</h2>
-		<ol id="venueList" />
-	</div>
+	<div id="appRoot"/>
+	<script type="text/babel" src="script.js"></script>
 </body>
 </html>

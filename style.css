@@ -3,9 +3,9 @@ body {
 	color: white;
 }
 
-#settings, #games {
+#settings, #games, #venues, #leagues {
 	width: 20%;
 }
-#settings input, #settings select {
+#settings input, #settings select, #settings button {
 	width: 100%;
 }
